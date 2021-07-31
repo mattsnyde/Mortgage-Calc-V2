@@ -1,0 +1,68 @@
+:root{
+    --primary-color: #1d5888;
+    --secondary-color: #ff883b;
+    --dark-color: #292929;
+    --white-color: #e7e7e7;
+}
+
+body{
+    color: var(--dark-color);
+}
+
+nav{
+    background-color: var(--dark-color)
+}
+
+footer{
+    background-color: var(--dark-color);
+}
+
+h1,h2,h3,h4,h5,h6{
+    color: var(--primary-color);
+}
+
+main>.container {
+    padding: 60px 15px 0;
+}
+
+footer{
+    padding-right: 1rem;
+}
+
+footer .social>a{ /*Gets all of the a tags with a class of social inside of the footer*/
+    color: var(--white-color);
+    opacity: .7;
+}
+
+footer .social>a:hover{
+    opacity: .95;
+    color: var(--secondary-color);
+    transition: all .5s linear;
+}
+
+.bootstrapIcon{
+    color: #563d7c;
+}
+
+.htmlIcon{
+    color: #e34c26;
+}
+
+.javascriptIcon{
+    color: #F0DB4F;
+}
+
+.cssIcon{
+    color: #2965f1;
+}
+
+.checklist>li i{ /*Anything styled with a checklist inside of an li look for an icon and change icon color*/
+    color: var(--secondary-color)
+}
+
+code[class*="language-"], /*Set up code tag css */
+    pre[class*="language-"]{
+        white-space: pre-wrap;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
