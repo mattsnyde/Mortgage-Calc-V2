@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project By Matthew Snyder</title>
+    <title>Mortgage Calculator: A Coding Project By Matthew Snyder</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +12,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script> <!--font-awesome-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!--Chart js script-->
     <link rel="icon" type="img/png" href="img/favicon-32x32.png">
  </head>
 
@@ -19,7 +20,7 @@
 <!--Nav Area -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top"> <!--Expand all of the links for medium screens and above, and hamburger icon for screens less than medium breakpont. dark background, fixed to to top-->
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="img/Dark logo.svg" alt="Matthew Snyder Mark" class="d-inline-block align-text-top" width="40" height="25"> APP NAME</a>
+            <a class="navbar-brand" href="#"><img src="img/Dark logo.svg" alt="Matthew Snyder Mark" class="d-inline-block align-text-top" width="40" height="25">Mortgage Calculator</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -47,7 +48,86 @@
     </nav>
     <!--Main-->
     <main class="flex-shrink-0">
-        <div class="container"></div>
+        <div class="container bg-dark mt-5">
+
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col">
+                    <h5 class="display-2 text-primary">Calculator</h5>
+                    <form class="row">
+                        <div class="col-12 gy-4 text-primary">
+                            <label for="homePriceInput" class="form-label" id="homePriceLabel">Home Price</label>
+                            <input type="range" class="form-range"  id="homePriceInput" min="80000" max="2500000" value=200000>    
+                        </div>
+                        <div class="col-12 gy-1 text-primary">
+                            <label for="homeDownPaymentInput" class="form-label" id="downPaymentLabel">Down Payment</label>
+                            <input type="number" id="homeDownPaymentInput" class="form-control" aria-label="down payment" placeholder="$0" value="0">
+                        </div>
+                        <div class="col-12 gy-1 text-primary">
+                            <label for="loanTypeInput" id="loanTypeLabel" class="form-label">Length Of Loan</label>
+                            <select name="" id="loanTypeInput" class="form-select" aria-Label="30yr loan">
+                                <option value="default" selected>Please select one</option>
+                                <option value="30">30 Years</option>
+                                <option value="20">20 Years</option>
+                                <option value="15">15 Years</option>
+                                <option value="10">10 Years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-12 gy-1 text-primary">
+                            <label for="interestRateInput" class="form-label" id="interestRateLabel">Interest Rate</label>
+                            <input type="number" id="interestRateInput" class="form-control" aria-label="Interest rate" placeholder ="0.00%" >
+                        </div>
+                        <div class="col-12 gy-2 pb-2">
+                            <button type="button" id="btnSubmit" class="btn btn-md border border-2 border-primary text-primary">Calculate</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col gy-4">
+                    <div class="container" id='chartHolder'>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="col-12">
+                    <p class="display-5 text-primary"><small>How is my monthly payment calculated?</small></p>
+                </div>
+                <div class="row gy-2">
+                    <div class="col-6">
+                        <h5>Principal & Interest</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="text-end" id="principalAndInterest">10000</h5>
+                    </div>
+                </div>
+                <div class="row gy-2">
+                    <div class="col-6">
+                        <h5>Homeowners insurance</h5>
+                    </div>
+                    <div class="col-6 pb-2">
+                        <input type="number" class="form-control" id="homeownerInsurance" aria-label="homeowner insurance" placeholder="$0">
+                    </div>
+                </div>
+                <div class="row gy-2">
+                    <div class="col-6">
+                        <h5>Property Tax</h5>
+                    </div>
+                    <div class="col-6 pb-2">
+                        <input type="number" class="form-control" id="propertyTax" aria-label="property tax" placeholder = "$0">
+                    </div>
+                </div>
+                <div class="row gy-2 pb-5">
+                    <div class="col-6">
+                        <h5>HOA fees</h5>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" class="form-control" id="hoaFees" aria-label="HOA Fees" placeholder = "$0">
+                    </div>
+                </div>
+            </div>
+           
+        </div>
     </main>
     <!--Footer Section-->
     <footer class="footer mt-auto py-3">
@@ -76,5 +156,12 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
     </script>
     <script src="js/site.js"></script>
+    <script>
+        let homePriceSlider = document.getElementById('homePriceInput')
+        homePriceSlider.oninput = function(){
+            homePriceValue();
+        }
+        let btn = document.getElementById('btnSubmit').addEventListener('click', function(){controller()})
+    </script>
 </body>
 </html>
