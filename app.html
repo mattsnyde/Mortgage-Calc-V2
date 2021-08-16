@@ -48,23 +48,23 @@
     </nav>
     <!--Main-->
     <main class="flex-shrink-0">
-        <div class="container bg-dark mt-5">
+        <div class="container mt-5">
 
-            <div class="row row-cols-1 row-cols-md-2">
+            <div class="row row-cols-1 row-cols-md-2 bg-dark">
                 <div class="col">
                     <h5 class="display-2 text-primary">Calculator</h5>
                     <form class="row">
                         <div class="col-12 gy-4 text-primary">
                             <label for="homePriceInput" class="form-label" id="homePriceLabel">Home Price</label>
-                            <input type="range" class="form-range"  id="homePriceInput" min="80000" max="2500000" value=200000>    
+                            <input type="range" class="form-range"  id="homePriceInput" min="80000" max="2500000" value=200000 required>    
                         </div>
                         <div class="col-12 gy-1 text-primary">
                             <label for="homeDownPaymentInput" class="form-label" id="downPaymentLabel">Down Payment</label>
-                            <input type="number" id="homeDownPaymentInput" class="form-control" aria-label="down payment" placeholder="$0" value="0">
+                            <input type="number" id="homeDownPaymentInput" class="form-control" aria-label="down payment" placeholder="$0" value="0" required>
                         </div>
                         <div class="col-12 gy-1 text-primary">
                             <label for="loanTypeInput" id="loanTypeLabel" class="form-label">Length Of Loan</label>
-                            <select name="" id="loanTypeInput" class="form-select" aria-Label="30yr loan">
+                            <select name="" id="loanTypeInput" class="form-select" aria-Label="30yr loan" required> 
                                 <option value="default" selected>Please select one</option>
                                 <option value="30">30 Years</option>
                                 <option value="20">20 Years</option>
@@ -75,7 +75,19 @@
                         
                         <div class="col-12 gy-1 text-primary">
                             <label for="interestRateInput" class="form-label" id="interestRateLabel">Interest Rate</label>
-                            <input type="number" id="interestRateInput" class="form-control" aria-label="Interest rate" placeholder ="0.00%" >
+                            <input type="number" id="interestRateInput" class="form-control" aria-label="Interest rate" placeholder ="0.00%" required>
+                        </div>
+                        <div class="col-12 gy-1 text-primary">
+                            <label for="homeownerInsurance" id="homeownerInsuranceLabel" class="form-label">Homeowners Insurance</label>
+                            <input type="number" class="form-control" id="homeownerInsurance" aria-label="homeowner insurance" placeholder="$0">
+                        </div>
+                        <div class="col-12 gy-1 text-primary">
+                            <label for="propertyTax" id="propertyTaxLabel" class="form-label">Property Tax</label>
+                            <input type="number" class="form-control" id="propertyTax" aria-label="property tax" placeholder = "$0">
+                        </div>
+                        <div class="col-12 gy-1 text-primary">
+                            <label for="hoaFees" id="hoaFeesLabel" class="form-label">Home Owner Associate (HOA) Fees</label>
+                            <input type="number" class="form-control" id="hoaFees" aria-label="HOA Fees" placeholder = "$0">
                         </div>
                         <div class="col-12 gy-2 pb-2">
                             <button type="button" id="btnSubmit" class="btn btn-md border border-2 border-primary text-primary">Calculate</button>
@@ -83,52 +95,48 @@
                     </form>
                 </div>
                 <div class="col gy-4">
-                    <div class="container" id='chartHolder'>
+                    <p class="display-5 text-primary"><small>Monthly Payment Breakdown</small></p>
+
+                    <div class="container-fluid gy-2 mb-2" id='chartHolder'>
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="row pt-5">
-                <div class="col-12">
-                    <p class="display-5 text-primary"><small>How is my monthly payment calculated?</small></p>
+             <div class="row row-cols-1 mt-5 bg-dark">
+                 <div class="col-4 text-center">
+                     <button type="button" class="btn btn-dark text-primary border-1 border-primary mt-4" id="showHistory">Show History</button>
+                 </div>
+                 <div class="col-4 text-center">
+                    <h5 class="text-center display-5 text-primary">Estimate History</h5>
+                 </div>
+                 <div class="col-4 text-center">
+                    <button type="button" class="btn btn-dark text-primary border-1 border-primary mt-4" id="clearHistory">Clear History</button>
                 </div>
-                <div class="row gy-2">
-                    <div class="col-6">
-                        <h5>Principal & Interest</h5>
-                    </div>
-                    <div class="col-6">
-                        <h5 class="text-end" id="principalAndInterest">10000</h5>
-                    </div>
-                </div>
-                <div class="row gy-2">
-                    <div class="col-6">
-                        <h5>Homeowners insurance</h5>
-                    </div>
-                    <div class="col-6 pb-2">
-                        <input type="number" class="form-control" id="homeownerInsurance" aria-label="homeowner insurance" placeholder="$0">
-                    </div>
-                </div>
-                <div class="row gy-2">
-                    <div class="col-6">
-                        <h5>Property Tax</h5>
-                    </div>
-                    <div class="col-6 pb-2">
-                        <input type="number" class="form-control" id="propertyTax" aria-label="property tax" placeholder = "$0">
-                    </div>
-                </div>
-                <div class="row gy-2 pb-5">
-                    <div class="col-6">
-                        <h5>HOA fees</h5>
-                    </div>
-                    <div class="col-6">
-                        <input type="number" class="form-control" id="hoaFees" aria-label="HOA Fees" placeholder = "$0">
-                    </div>
-                </div>
-            </div>
-           
+                 <div class="col-12 mt-2">
+                     <div class="holder table-responsive pb-4">
+                         <table class="table table-striped table-border table-light">
+                             <tbody id="results">
+                                 <thead> <!--Creates table heading but leaves the body relatively empty since that is generated through javascript.-->
+                                    <tr>
+                                        <th scope='col'>Est. Monthly Payment</th>
+                                        <th scope='col'>Home Price</th>
+                                        <th scope='col'>Down Payment</th>
+                                        <th scope='col'>Loan Term</th>
+                                        <th scope='col'>Interest Rate</th>
+                                        <th scope='col'>Homeowners Insurance</th>
+                                        <th scope='col'>Property Tax</th>
+                                        <th scope='col'>HOA Fees</th>
+                                    </tr>
+                                 </thead>
+                            </tbody>
+                          </table>
+                     </div>
+                 </div>
+             </div>
         </div>
     </main>
+    
     <!--Footer Section-->
     <footer class="footer mt-auto py-3">
         <div class="container-fluid ">
@@ -149,6 +157,20 @@
             </div>
          </div>
     </footer>
+
+    <template id="fbTemplate"> <!--Table templae used to display user esimate history-->
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </template>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
     </script>
@@ -161,7 +183,16 @@
         homePriceSlider.oninput = function(){
             homePriceValue();
         }
-        let btn = document.getElementById('btnSubmit').addEventListener('click', function(){controller()})
+        let btn = document.getElementById('btnSubmit').addEventListener('click', function(){
+            controller()
+            addToLS()
+        })
+        let clearHistoryBtn = document.getElementById('clearHistory').addEventListener('click', function(){
+            clearLocalStorage();
+        })
+        let showHistoryBtn = document.getElementById('showHistory').addEventListener('click', function(){
+            showHistory();
+        })
     </script>
 </body>
 </html>
